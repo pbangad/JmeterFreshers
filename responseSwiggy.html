@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" class="">
+    <head>
+        
+            <script type="text/javascript" nonce=150668639141000>
+    window.swgyStorage = {
+        localStorageSupport: true,
+        check: function() {
+            try {
+                if (typeof(Storage) != "undefined") {
+                    localStorage.setItem('test', 1);
+                } else {
+                    this.localStorageSupport = false;
+                    window.localStorage = window.sessionStorage = {
+                        setItem: function () { return true },
+                        getItem: function () { return null },
+                        removeItem: function () { return true }
+                    };
+                }
+            } catch (ex) {
+                this.localStorageSupport = false;
+                // override the setItem method of localStorage
+                localStorage.setItem = function () { return true };
+                sessionStorage.setItem = function () { return true };
+            }
+        },
+        getItem: function (name) {
+            if (this.localStorageSupport) {
+                return localStorage.getItem(name);
+            } else {
+                name = 'loc_' + name;
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for(var i=0;i < ca.length;i++) {
+                    var c = ca[i];
+                    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                }
+                return null;
+            }
+        },
+        setItem: function (name, value, days) {
+            if(typeof(name) == 'undefined' || typeof(value) == 'undefined') return;
+            if (this.localStorageSupport) {
+                return localStorage.setItem(name, value);
+            } else {
+                if (value !== null && value.toString().length < 150) {
+                   name = 'loc_' + name;
+                    days = days || 3/24;
+                    var date = new Date();
+                    date.setTime(date.getTime()+(days*24*60*60*1000));
+                    var expires = "; expires="+date.toGMTString();
+                    document.cookie = name+"="+value+expires+"; path=/";
+                }
+                return true;
+            }
+        },
+        removeItem: function (name) {
+            if (this.localStorageSupport) {
+                return localStorage.removeItem(name);
+            } else {
+                this.setItem(name,"",-1);
+                return true;
+            }
+        }
+    };
+
+    window.swgyStorage.check();
+</script>
+            <script nonce=150668639141000>
+                var Swiggy = {options: {}};
+            </script>
+            
+
+
+
+
+
+
+<meta charset="UTF-8">
+
+<script type="text/javascript" nonce=150668639141000>
+window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o?o:e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({QJf3ax:[function(t,e){function n(t){function e(e,n,a){t&&t(e,n,a),a||(a={});for(var c=s(e),f=c.length,u=i(a,o,r),d=0;f>d;d++)c[d].apply(u,n);return u}function a(t,e){f[t]=s(t).concat(e)}function s(t){return f[t]||[]}function c(){return n(e)}var f={};return{on:a,emit:e,create:c,listeners:s,_events:f}}function r(){return{}}var o="nr@context",i=t("gos");e.exports=n()},{gos:"7eSDFh"}],ee:[function(t,e){e.exports=t("QJf3ax")},{}],3:[function(t){function e(t){try{i.console&&console.log(t)}catch(e){}}var n,r=t("ee"),o=t(1),i={};try{n=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(i.console=!0,-1!==n.indexOf("dev")&&(i.dev=!0),-1!==n.indexOf("nr_dev")&&(i.nrDev=!0))}catch(a){}i.nrDev&&r.on("internal-error",function(t){e(t.stack)}),i.dev&&r.on("fn-err",function(t,n,r){e(r.stack)}),i.dev&&(e("NR AGENT IN DEVELOPMENT MODE"),e("flags: "+o(i,function(t){return t}).join(", ")))},{1:22,ee:"QJf3ax"}],4:[function(t){function e(t,e,n,i,s){try{c?c-=1:r("err",[s||new UncaughtException(t,e,n)])}catch(f){try{r("ierr",[f,(new Date).getTime(),!0])}catch(u){}}return"function"==typeof a?a.apply(this,o(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function n(t){r("err",[t,(new Date).getTime()])}var r=t("handle"),o=t(6),i=t("ee"),a=window.onerror,s=!1,c=0;t("loader").features.err=!0,t(5),window.onerror=e;try{throw new Error}catch(f){"stack"in f&&(t(1),t(2),"addEventListener"in window&&t(3),window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)&&t(4),s=!0)}i.on("fn-start",function(){s&&(c+=1)}),i.on("fn-err",function(t,e,r){s&&(this.thrown=!0,n(r))}),i.on("fn-end",function(){s&&!this.thrown&&c>0&&(c-=1)}),i.on("internal-error",function(t){r("ierr",[t,(new Date).getTime(),!0])})},{1:9,2:8,3:6,4:10,5:3,6:23,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],5:[function(t){function e(){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var n=t("ee"),r=t("handle"),o=t(1),i=t(2);t("loader").features.stn=!0,t(3),n.on("fn-start",function(t){var e=t[0];e instanceof Event&&(this.bstStart=Date.now())}),n.on("fn-end",function(t,e){var n=t[0];n instanceof Event&&r("bst",[n,e,this.bstStart,Date.now()])}),o.on("fn-start",function(t,e,n){this.bstStart=Date.now(),this.bstType=n}),o.on("fn-end",function(t,e){r("bstTimer",[e,this.bstStart,Date.now(),this.bstType])}),i.on("fn-start",function(){this.bstStart=Date.now()}),i.on("fn-end",function(t,e){r("bstTimer",[e,this.bstStart,Date.now(),"requestAnimationFrame"])}),n.on("pushState-start",function(){this.time=Date.now(),this.startPath=location.pathname+location.hash}),n.on("pushState-end",function(){r("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),"addEventListener"in window.performance&&(window.performance.addEventListener("webkitresourcetimingbufferfull",function(){r("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.webkitClearResourceTimings()},!1),window.performance.addEventListener("resourcetimingbufferfull",function(){r("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.clearResourceTimings()},!1)),document.addEventListener("scroll",e,!1),document.addEventListener("keypress",e,!1),document.addEventListener("click",e,!1)}},{1:9,2:8,3:7,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],6:[function(t,e){function n(t){i.inPlace(t,["addEventListener","removeEventListener"],"-",r)}function r(t){return t[1]}var o=t("ee").create(),i=t(1)(o),a=t("gos");if(e.exports=o,n(window),"getPrototypeOf"in Object){for(var s=document;s&&!s.hasOwnProperty("addEventListener");)s=Object.getPrototypeOf(s);s&&n(s);for(var c=XMLHttpRequest.prototype;c&&!c.hasOwnProperty("addEventListener");)c=Object.getPrototypeOf(c);c&&n(c)}else XMLHttpRequest.prototype.hasOwnProperty("addEventListener")&&n(XMLHttpRequest.prototype);o.on("addEventListener-start",function(t){if(t[1]){var e=t[1];"function"==typeof e?this.wrapped=t[1]=a(e,"nr@wrapped",function(){return i(e,"fn-",null,e.name||"anonymous")}):"function"==typeof e.handleEvent&&i.inPlace(e,["handleEvent"],"fn-")}}),o.on("removeEventListener-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{1:24,ee:"QJf3ax",gos:"7eSDFh"}],7:[function(t,e){var n=t("ee").create(),r=t(1)(n);e.exports=n,r.inPlace(window.history,["pushState"],"-")},{1:24,ee:"QJf3ax"}],8:[function(t,e){var n=t("ee").create(),r=t(1)(n);e.exports=n,r.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),n.on("raf-start",function(t){t[0]=r(t[0],"fn-")})},{1:24,ee:"QJf3ax"}],9:[function(t,e){function n(t,e,n){t[0]=o(t[0],"fn-",null,n)}var r=t("ee").create(),o=t(1)(r);e.exports=r,o.inPlace(window,["setTimeout","setInterval","setImmediate"],"setTimer-"),r.on("setTimer-start",n)},{1:24,ee:"QJf3ax"}],10:[function(t,e){function n(){f.inPlace(this,p,"fn-")}function r(t,e){f.inPlace(e,["onreadystatechange"],"fn-")}function o(t,e){return e}function i(t,e){for(var n in t)e[n]=t[n];return e}var a=t("ee").create(),s=t(1),c=t(2),f=c(a),u=c(s),d=window.XMLHttpRequest,p=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"];e.exports=a,window.XMLHttpRequest=function(t){var e=new d(t);try{a.emit("new-xhr",[],e),u.inPlace(e,["addEventListener","removeEventListener"],"-",o),e.addEventListener("readystatechange",n,!1)}catch(r){try{a.emit("internal-error",[r])}catch(i){}}return e},i(d,XMLHttpRequest),XMLHttpRequest.prototype=d.prototype,f.inPlace(XMLHttpRequest.prototype,["open","send"],"-xhr-",o),a.on("send-xhr-start",r),a.on("open-xhr-start",r)},{1:6,2:24,ee:"QJf3ax"}],11:[function(t){function e(t){var e=this.params,r=this.metrics;if(!this.ended){this.ended=!0;for(var i=0;c>i;i++)t.removeEventListener(s[i],this.listener,!1);if(!e.aborted){if(r.duration=(new Date).getTime()-this.startTime,4===t.readyState){e.status=t.status;var a=t.responseType,f="arraybuffer"===a||"blob"===a||"json"===a?t.response:t.responseText,u=n(f);if(u&&(r.rxSize=u),this.sameOrigin){var d=t.getResponseHeader("X-NewRelic-App-Data");d&&(e.cat=d.split(", ").pop())}}else e.status=0;r.cbTime=this.cbTime,o("xhr",[e,r,this.startTime])}}}function n(t){if("string"==typeof t&&t.length)return t.length;if("object"!=typeof t)return void 0;if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if("undefined"!=typeof FormData&&t instanceof FormData)return void 0;try{return JSON.stringify(t).length}catch(e){return void 0}}function r(t,e){var n=i(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}if(window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)){t("loader").features.xhr=!0;var o=t("handle"),i=t(2),a=t("ee"),s=["load","error","abort","timeout"],c=s.length,f=t(1);t(4),t(3),a.on("new-xhr",function(){this.totalCbs=0,this.called=0,this.cbTime=0,this.end=e,this.ended=!1,this.xhrGuids={}}),a.on("open-xhr-start",function(t){this.params={method:t[0]},r(this,t[1]),this.metrics={}}),a.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),a.on("send-xhr-start",function(t,e){var r=this.metrics,o=t[0],i=this;if(r&&o){var f=n(o);f&&(r.txSize=f)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(i.params.aborted=!0),("load"!==t.type||i.called===i.totalCbs&&(i.onloadCalled||"function"!=typeof e.onload))&&i.end(e)}catch(n){try{a.emit("internal-error",[n])}catch(r){}}};for(var u=0;c>u;u++)e.addEventListener(s[u],this.listener,!1)}),a.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),a.on("xhr-load-added",function(t,e){var n=""+f(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),a.on("xhr-load-removed",function(t,e){var n=""+f(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),a.on("addEventListener-end",function(t,e){e instanceof XMLHttpRequest&&"load"===t[0]&&a.emit("xhr-load-added",[t[1],t[2]],e)}),a.on("removeEventListener-end",function(t,e){e instanceof XMLHttpRequest&&"load"===t[0]&&a.emit("xhr-load-removed",[t[1],t[2]],e)}),a.on("fn-start",function(t,e,n){e instanceof XMLHttpRequest&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),a.on("fn-end",function(t,e){this.xhrCbStart&&a.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}},{1:"XL7HBI",2:12,3:10,4:6,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],12:[function(t,e){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");return!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname),r.sameOrigin=!e.hostname||e.hostname===document.domain&&e.port===n.port&&e.protocol===n.protocol,r}},{}],13:[function(t,e){function n(t){return function(){r(t,[(new Date).getTime()].concat(i(arguments)))}}var r=t("handle"),o=t(1),i=t(2);"undefined"==typeof window.newrelic&&(newrelic=window.NREUM);var a=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit","noticeError"];o(a,function(t,e){window.NREUM[e]=n("api-"+e)}),e.exports=window.NREUM},{1:22,2:23,handle:"D5DuLP"}],gos:[function(t,e){e.exports=t("7eSDFh")},{}],"7eSDFh":[function(t,e){function n(t,e,n){if(r.call(t,e))return t[e];var o=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:o,writable:!0,enumerable:!1}),o}catch(i){}return t[e]=o,o}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],D5DuLP:[function(t,e){function n(t,e,n){return r.listeners(t).length?r.emit(t,e,n):void(r.q&&(r.q[t]||(r.q[t]=[]),r.q[t].push(e)))}var r=t("ee").create();e.exports=n,n.ee=r,r.q={}},{ee:"QJf3ax"}],handle:[function(t,e){e.exports=t("D5DuLP")},{}],XL7HBI:[function(t,e){function n(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:i(t,o,function(){return r++})}var r=1,o="nr@id",i=t("gos");e.exports=n},{gos:"7eSDFh"}],id:[function(t,e){e.exports=t("XL7HBI")},{}],G9z0Bl:[function(t,e){function n(){var t=p.info=NREUM.info,e=f.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){s(d,function(e,n){e in t||(t[e]=n)});var n="https"===u.split(":")[0]||t.sslForHttp;p.proto=n?"https://":"http://",a("mark",["onload",i()]);var r=f.createElement("script");r.src=p.proto+t.agent,e.parentNode.insertBefore(r,e)}}function r(){"complete"===f.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=t("handle"),s=t(1),c=window,f=c.document;t(2);var u=(""+location).split("?")[0],d={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-686.min.js"},p=e.exports={offset:i(),origin:u,features:{}};f.addEventListener?(f.addEventListener("DOMContentLoaded",o,!1),c.addEventListener("load",n,!1)):(f.attachEvent("onreadystatechange",r),c.attachEvent("onload",n)),a("mark",["firstbyte",i()])},{1:22,2:13,handle:"D5DuLP"}],loader:[function(t,e){e.exports=t("G9z0Bl")},{}],22:[function(t,e){function n(t,e){var n=[],o="",i=0;for(o in t)r.call(t,o)&&(n[i]=e(o,t[o]),i+=1);return n}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],23:[function(t,e){function n(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=n},{}],24:[function(t,e){function n(t){return!(t&&"function"==typeof t&&t.apply&&!t[i])}var r=t("ee"),o=t(1),i="nr@wrapper",a=Object.prototype.hasOwnProperty;e.exports=function(t){function e(t,e,r,a){function nrWrapper(){var n,i,s,f;try{i=this,n=o(arguments),s=r&&r(n,i)||{}}catch(d){u([d,"",[n,i,a],s])}c(e+"start",[n,i,a],s);try{return f=t.apply(i,n)}catch(p){throw c(e+"err",[n,i,p],s),p}finally{c(e+"end",[n,i,f],s)}}return n(t)?t:(e||(e=""),nrWrapper[i]=!0,f(t,nrWrapper),nrWrapper)}function s(t,r,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<r.length;c++)s=r[c],a=t[s],n(a)||(t[s]=e(a,f?s+o:o,i,s))}function c(e,n,r){try{t.emit(e,n,r)}catch(o){u([o,e,n,r])}}function f(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){u([r])}for(var o in t)a.call(t,o)&&(e[o]=t[o]);return e}function u(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=r),e.inPlace=s,e.flag=i,e}},{1:23,ee:"QJf3ax"}]},{},["G9z0Bl",4,11,5]);
+;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"a9dd66e24a",applicationID:35670318,sa:1,agent:"js-agent.newrelic.com/nr-686.min.js"}
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Order food online from India&#39;s best food delivery service. Order from restaurants near you. | Swiggy.com</title>
+<base href="/">
+<meta name="description" content="Order food online from over 9000 restaurants. Experience fastest food delivery service with no minimum order &amp; GPS tracking.">
+<meta name="Keywords" content="Restaurants in Bangalore, Gurgaon, Hyderabad, Delhi, Mumbai, Pune, Kolkata, Chennai, Ahmedabad, Order food online, Home delivery">
+
+
+    <meta name="robots" content="index, follow">
+
+
+<!-- OG Tags -->
+<meta property="og:title" content="Order food online from India&#39;s best food delivery service. Order from restaurants near you. | Swiggy.com">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.swiggy.com/">
+<meta property="og:image" content="https://res.cloudinary.com/swiggy/image/upload/f_auto,fl_lossy,q_auto/v1453959250/banner_home_h36npl">
+<meta property="og:description" content="Order food online from over 9000 restaurants. Experience fastest food delivery service with no minimum order &amp; GPS tracking.">
+
+
+
+<!-- Standard Favicon -->
+<link rel="icon" type="image/x-icon" href="/images/favicons/favicon-16x16.ico?v=5" />
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicons/favicon-32x32.ico?v=5" />
+
+<!-- Global Favicon -->
+<link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png?v=5" />
+
+<!-- Opera Speed Dial Favicon -->
+<link rel="icon" type="image/png" href="/images/favicons/mstile-150x150.png?v=5" />
+
+<!-- For iPhone 4 Retina display -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png?v=5">
+
+<!-- For iPad -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png?v=5">
+
+<!-- For iPhone -->
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png?v=5">
+            <link rel="stylesheet" href="/libs/swiggyFont2.css?v=1"></link>
+            
+                <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/static.swiggy/production/css/app.b42af6c05f7131293854810134a8463c.css"></link>
+            
+            
+                
+                    <link rel="preload" href="https://s3-ap-southeast-1.amazonaws.com/static.swiggy/production/js/vendor.06535c642e7ccea5fd33.js" as="script">
+                
+            
+                
+                    <link rel="preload" href="https://s3-ap-southeast-1.amazonaws.com/static.swiggy/production/js/app.7f0975d9e849cb0d5f39.js" as="script">
+                
+            
+            
+                
+                    <link rel="preload" href="https://s3-ap-southeast-1.amazonaws.com/static.swiggy/production/js/home.5285575e84213d7d591c.js" as="script" />
+                
+            
+            
+        
+    </head>
+    <body class="home "
+        
+            style="background: url(https://res.cloudinary.com/swiggy/image/upload/c_scale,f_auto,fl_lossy,q_auto/29LN0615-29_380_Resized_2_C2_jvs9nf) no-repeat;"
+        >
+
+        <div class="layout-wrapper">
+            
+            
+    
+
+
+            
+
+            
+
+<div class="container">
+    <!-- header -->
+    <div class="header clearfix">
+        <div class="clearfix">
+            <div class="pull-left">
+                <a href="/" class="logo swiggy-logo-orange">
+                    
+                </a>
+            </div>
+            <div class="pull-right nav">
+                <div class="swiggy-hiring hidden-xs">
+                  <a href="/careers">We are Hiring</a>
+                </div>
+                <div class="get-app">
+                    <span>Get app: </span>
+                    <ul class="app-links">
+                        <li>
+                            <a class="store-link icon-swgy-android" href="https://play.google.com/store/apps/details?id=in.swiggy.android&referrer=utm_source%3Dswiggy%26utm_medium%3Dheader">
+                            </a>
+                        </li>
+                        <li>
+                            <a class="store-link icon-swgy-ios" href="https://itunes.apple.com/in/app/id989540920&referrer=utm_source%3Dswiggy%26utm_medium%3Dhomepage"></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- <a class="btn btn-default careers" href="/careers">We're Hiring</a> -->
+                <login islandingpage="true"></login>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="home-content container">
+    <h1 class="hero-title">Order from restaurants near you</h1>
+    <home><div style="height:230px"></div></home>
+</div>
+
+<script nonce=150668639141000>
+    dataLayer = [];
+    dataLayer.push({"utmSource":"direct","utmMedium":"direct","utmCampaign":"direct","utmContent":"direct","platform":"web","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36","ip":"114.143.135.82","time":1506686391410,"tid":"e2965e18-fc6b-440b-8093-6a06ff15a5c1","sid":"51598e4a-5e95-4a59-9920-24bc1da23f62","deviceId":"610ab3da-cb08-4ccc-98f6-59862fd7dd2b","pageType":"home"});
+</script>
+
+
+            
+                
+                    <footer>
+                        
+    <div class="glassy-box">
+        <div class="highlights">
+            <ul class="clearfix">
+                <li class="col-xs-12 col-md-4">
+                    <div class="icon">
+                        <span class="icon-swgy-lightning"></span>
+                    </div>
+                    <h3>Lightning Fast Delivery</h3>
+                </li>
+                <li class="col-xs-12 col-md-4">
+                    <div class="icon top-bell-fix">
+                        <span class="icon-swgy-bell"></span>
+                    </div>
+                    <h3>No Minimum Order</h3>
+                </li>
+                <li class="col-xs-12 col-md-4">
+                    <div class="icon top-wallet-fix">
+                        <span class="icon-swgy-wallet"></span>
+                    </div>
+                    <h3>Pay via Card/Cash</h3>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+                        <div class="social">
+                            <ul>
+                                <li>
+                                    <a href="https://www.facebook.com/swiggy.in"><span class="icon icon-swgy-facebook"></span></a>
+                                </li>
+                                <li>
+                                    <a href="http://pinterest.com/swiggyindia"><span class="icon icon-swgy-pinterest"></span></a>
+                                </li>
+                                <li>
+                                    <a href="https://instagram.com/swiggyindia/"><span class="icon icon-swgy-instagram"></span></a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/swiggy_in"><span class="icon icon-swgy-twitter"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <ul>
+                            <li>
+                                <a href="/about">About Us</a>
+                            </li>
+                            <li>
+                                <span> • </span><a href="/team">Team</a>
+                            </li>
+                            <li>
+                                <span> • </span><a href="/careers">Careers</a>
+                            </li>
+                            <li>
+                                <span> • </span><a href="/support">Help &amp; Support</a>
+                            </li>
+                            <li>
+                                <span> • </span><a href="/terms-and-conditions">Terms &amp; Conditions</a>
+                            </li>
+                            <li>
+                                <span> • </span><a href="/refund-policy">Refunds &amp; Cancellation Policy</a>
+                            </li>
+                            <li>
+                                <span> • </span><a href="/privacy-policy">Privacy Policy</a>
+                            </li>
+                            <li>
+                                <span> • </span><a href="/offer-terms">Offer Terms</a>
+                            </li>
+                            <li>
+                                <span> • </span><a title="Swiggy Blog" target="_blank" href="http://blog.swiggy.com">Swiggy Blog</a>
+                            </li>
+                            <li>
+                               <span> • </span><a title="Partner with US" target="_blank" href="https://goo.gl/forms/juGUFJwtF5vQkp8w2">Partner With Us</a>
+                           </li>
+                           <li>
+                               <span> • </span><a title="Ride with US" target="_blank" href="https://goo.gl/WVbCMr">Ride With Us</a>
+                           </li>
+                           <li>
+                               <span> • </span><a title="Swiggy's Bug Bounty Program" href="/bug-bounty">Bug Bounty</a>
+                           </li>
+                        </ul>
+
+                        <div class="copyright">
+                            <div class="subtitle fancy"><span>&copy; 2017, Swiggy</span></div>
+                        </div>
+                    </footer>
+                
+            
+        </div>
+
+        
+            <script nonce=150668639141000>
+                var App = {};
+                App.cityList = [];
+                App.locationBoxFocus = false;
+                
+
+                
+                    App.isProduction = true;
+                
+
+                
+                    App.cityList = [{"id":1,"name":"Bangalore","openTime":0,"closeTime":2359,"enabled":1,"bannerMessage":"","maxDeliveryTime":80,"minDeliveryTime":25,"slug":"bangalore","isOpen":1,"dbHelpline":"0","showRatings":1,"deliveryChargeThreshold":250,"northEastLatLng":"13.066554, 77.780534","southWestLatLng":"12.810723, 77.403539","restaurantHelpline":"08039591819","customerCareNumber":"08067466792","deliveryRadius":4,"state":"Karnataka","compulsoryDeliveryCharge":35,"capOnCodRestriction":1,"capOnCodMinValue":1000,"capOnCodMessage":" Please pay online. Inconvenience regretted.","restaurantSlaFeatureGate":1,"globalFlatFeeApplicable":0,"cartSlaFeatureGate":1,"assuredMaxOrderValue":1000,"assuredEnabled":false,"longDistanceSolrRadius":5.5},{"id":2,"name":"Gurgaon","openTime":0,"closeTime":2359,"enabled":1,"bannerMessage":"","maxDeliveryTime":65,"minDeliveryTime":45,"slug":"gurgaon","isOpen":1,"dbHelpline":"01139595049","showRatings":1,"deliveryChargeThreshold":200,"northEastLatLng":"28.563634, 77.138441","southWestLatLng":"28.287671, 76.790998","restaurantHelpline":"01139595977","customerCareNumber":"08067466792","deliveryRadius":5,"state":"Haryana","compulsoryDeliveryCharge":30,"capOnCodRestriction":1,"capOnCodMinValue":1000,"capOnCodMessage":" Please pay online. Inconvenience regretted.","restaurantSlaFeatureGate":1,"globalFlatFeeApplicable":0,"cartSlaFeatureGate":1,"assuredMaxOrderValue":1000,"assuredEnabled":true,"longDistanceSolrRadius":6.5},{"id":3,"name":"Hyderabad","openTime":0,"closeTime":2359,"enabled":1,"bannerMessage":"","maxDeliveryTime":63,"minDeliveryTime":33,"slug":"hyderabad","isOpen":1,"dbHelpline":"0","showRatings":1,"deliveryChargeThreshold":200,"northEastLatLng":"17.587198, 78.618846","southWestLatLng":"17.224871, 78.254237","restaurantHelpline":"04039594060","customerCareNumber":"08067466792","deliveryRadius":3.6,"state":"Telangana","compulsoryDeliveryCharge":40,"capOnCodRestriction":1,"capOnCodMinValue":1000,"capOnCodMessage":" Please pay online. Inconvenience regretted.","restaurantSlaFeatureGate":1,"globalFlatFeeApplicable":0,"cartSlaFeatureGate":1,"assuredMaxOrderValue":1000,"assuredEnabled":false,"longDistanceSolrRadius":5.5},{"id":4,"name":"Delhi","openTime":0,"closeTime":2359,"enabled":1,"bannerMessage":"","maxDeliveryTime":65,"minDeliveryTime":35,"slug":"delhi","isOpen":1,"dbHelpline":"01139595049","showRatings":1,"deliveryChargeThreshold":200,"northEastLatLng":"28.885002, 77.357862","southWestLatLng":"28.400500, 76.866224","restaurantHelpline":"01139595977","customerCareNumber":"08067466792","deliveryRadius":4.5,"state":"New Delhi","compulsoryDeliveryCharge":30,"capOnCodRestriction":1,"capOnCodMinValue":1500,"capOnCodMessage":" Please pay online. Inconvenience regretted.","restaurantSlaFeatureGate":1,"globalFlatFeeApplicable":0,"cartSlaFeatureGate":1,"assuredMaxOrderValue":1000,"assuredEnabled":true,"longDistanceSolrRadius":6},{"id":5,"name":"Mumbai","openTime":0,"closeTime":2359,"enabled":1,"bannerMessage":"","maxDeliveryTime":75,"minDeliveryTime":20,"slug":"mumbai","isOpen":1,"dbHelpline":"0","showRatings":1,"deliveryChargeThreshold":150,"northEastLatLng":"19.354570, 73.206674","southWestLatLng":"18.648212, 72.717783","restaurantHelpline":"02230038022","customerCareNumber":"08067466792","deliveryRadius":3.5,"state":"Maharashtra","compulsoryDeliveryCharge":30,"capOnCodRestriction":1,"capOnCodMinValue":1000,"capOnCodMessage":" Please pay online. Inconvenience regretted.","restaurantSlaFeatureGate":1,"globalFlatFeeApplicable":0,"cartSlaFeatureGate":1,"assuredMaxOrderValue":1000,"assuredEnabled":true,"longDistanceSolrRadius":6.5},{"id":6,"name":"Pune","openTime":0,"closeTime":2359,"enabled":1,"bannerMessage":"","maxDeliveryTime":70,"minDeliveryTime":40,"slug":"pune","isOpen":1,"dbHelpline":"02233835854","showRatings":1,"deliveryChargeThreshold":250,"northEastLatLng":"18.661937, 74.002356","southWestLatLng":"18.402172, 73.730445","restaurantHelpline":"02233835850","customerCareNumber":"08067466792","deliveryRadius":3.5,"state":"Maharashtra","compulsoryDeliveryCharge":25,"capOnCodRestriction":1,"capOnCodMinValue":1000,"capOnCodMessage":" Please pay online. Inconvenience regretted.","restaurantSlaFeatureGate":1,"globalFlatFeeApplicable":0,"cartSlaFeatureGate":1,"assuredMaxOrderValue":1000,"assuredEnabled":true,"longDistanceSolrRadius":6},{"id":7,"name":"Kolkata","openTime":0,"closeTime":2359,"enabled":1,"bannerMessage":"","maxDeliveryTime":75,"minDeliveryTime":36,"slug":"kolkata","isOpen":1,"dbHelpline":"08039510463","showRatings":1,"deliveryChargeThreshold":250,"northEastLatLng":"23.151336, 88.731136","southWestLatLng":"22.142500, 87.780818","restaurantHelpline":"9073397584","customerCareNumber":"08067466792","deliveryRadius":4,"state":"West Bengal","compulsoryDeliveryCharge":25,"capOnCodRestriction":1,"capOnCodMinValue":1200,"capOnCodMessage":" Please pay online. Inconvenience regretted.","restaurantSlaFeatureGate":1,"globalFlatFeeApplicable":0,"cartSlaFeatureGate":1,"assuredMaxOrderValue":1000,"assuredEnabled":true,"longDistanceSolrRadius":8},{"id":8,"name":"Chennai","openTime":0,"closeTime":2359,"enabled":1,"bannerMessage":"","maxDeliveryTime":62,"minDeliveryTime":39,"slug":"chennai","isOpen":1,"dbHelpline":"04430833933","showRatings":1,"deliveryChargeThreshold":150,"northEastLatLng":"13.264194, 80.360074","southWestLatLng":"12.675549, 79.940746","restaurantHelpline":"0","customerCareNumber":"04460006600","deliveryRadius":4,"state":"Tamil Nadu","compulsoryDeliveryCharge":30,"capOnCodRestriction":1,"capOnCodMinValue":1000,"capOnCodMessage":" Please pay online. Inconvenience regretted.","restaurantSlaFeatureGate":1,"globalFlatFeeApplicable":0,"cartSlaFeatureGate":1,"assuredMaxOrderValue":1000,"assuredEnabled":false,"longDistanceSolrRadius":6}];
+                
+
+                
+
+                
+                    App.userAgent = "web";
+                
+
+                
+
+                
+                   Swiggy.options = {"client_sentry_enabled":"1","fb_pixel_enabled":"1","_times_ratings_enabled":"0","_paytm_feature_enabled":"1","utm_medium":"direct","google_place_action_telephone":"80-330-13150","sla_range_enabled":"0","banner_bg_color":"","vp_home_page_mobile_bg":"mobileBG_uhjpky","invoice_email_enabled":"1","cod_disabled_subtitle":"","pingdom_rum_enabled":"0","tracking_img_rest":"restaurant_cwln99.png","autosuggest_enabled":"0","listv3_ab_enabled":"0","_ios_promotion":"1","invoice_email_api":"http://www.swiggyint.in","_meal_completion_enabled":"1","new_year_banner_msg_gurgaon_web":"0","_site_domain_suffix":"Swiggy.com","utm_campaign":"direct","invoice_enabled":"1","pure_veg_filter_switch":"0","_cross_selling_enabled":"1","home_page_mobile_bg":"","uber_popup_imageid":"dub7vjyzqhchxd61kzz0","_mobikwik_feature_enabled":"1","home_page_title":"Order from restaurants near you","is_ga_events_enabled":"1","splash_ios_img_id":"Referral-iOS_zep22q.jpg","utm_source":"direct","show_new_year_banner_msg_checkout_web":"0","new_year_banner_msg_chennai_web":"0","sla_range_weight":"50","gtm_click_stream_enabled":"1","same_item_different_addons":"0","swiggy_money_txn_history_text":"Your transaction history will appear here","web_dominos_enabled":"1","new_year_banner_msg_mumbai_web":"0","home_page_bg":"Bg_dark_wjhyty","listv3_weight":"40","_freecharge_feature_enabled":"1","splash_android_img_id":"Referral-Android_h8lgxt.jpg","tracking_img_se":"de_ojklf8.png","new_year_banner_msg_delhi_web":"0","new_year_banner_msg_bangalore_web":"0","utm_content":"direct","siteurl":"https://www.swiggy.com","new_year_banner_msg_hyderabad_web":"0","new_year_banner_msg_kolkata_web":"0","order_rating_enabled":"1","google_place_action_enabled":"1","app-page-content":"<br/><br/>\r\n                        <br/><br/>\r\n                        <br/><br/>\r\n                        <br/><br/>\r\n                        <h1>Get the Swiggy App!</h1>\r\n                        <p>Available on Google play for android & on the App store for iOS. Download the app and drive hunger far, far away.</p>\r\n\r\n                        <br/><br/>","tracking_interval_ms":"10000","tracking_img_cust":"user-home_aflnoo.png","_cancellation_fee_enabled":"1","cod_disabled_description":"","vp_home_page_bg":"29LN0615-29_380_Resized_2_C2_jvs9nf","android_swiggy_select_collection_name":"Swiggy Assured","sla_range_city_list":"bangalore,bengaluru","contactus_v2":"1","new_year_banner_msg_pune_web":"0","_site_include_sokrati_tracking":"1"};
+                
+                
+                
+                
+                    Swiggy.tidData = {"tid":"e2965e18-fc6b-440b-8093-6a06ff15a5c1","sid":"51598e4a-5e95-4a59-9920-24bc1da23f62","deviceId":"610ab3da-cb08-4ccc-98f6-59862fd7dd2b"};
+                
+                
+                    Swiggy.pageType = "home";
+                
+                
+                
+                
+                
+                    App.sentryClientDSN = "https://943d73b9c0ea4450b2cbfde08cf9db7f@sentry.swiggyapp.com/32";
+                
+                
+                    App.csrfToken = "Ozboikm9cmvJ-lSt5ieALcQAtd6LrlhbRB2eHwPg";
+                
+                
+                    App.gtmData = {"utmSource":"direct","utmMedium":"direct","utmCampaign":"direct","utmContent":"direct","platform":"web","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36","ip":"114.143.135.82","time":1506686391410,"tid":"e2965e18-fc6b-440b-8093-6a06ff15a5c1","sid":"51598e4a-5e95-4a59-9920-24bc1da23f62","deviceId":"610ab3da-cb08-4ccc-98f6-59862fd7dd2b","pageType":"home"};
+                
+            </script>
+
+            
+                <script src="https://s3-ap-southeast-1.amazonaws.com/static.swiggy/production/libs/polyfill.js?v=1"></script>
+                <script src="https://s3-ap-southeast-1.amazonaws.com/static.swiggy/production/js/vendor.06535c642e7ccea5fd33.js"></script>
+                
+                    <script src="https://s3-ap-southeast-1.amazonaws.com/static.swiggy/production/js/home.5285575e84213d7d591c.js"></script>
+                
+                <script src="https://s3-ap-southeast-1.amazonaws.com/static.swiggy/production/js/app.7f0975d9e849cb0d5f39.js"></script>
+            
+
+            
+
+            
+                <!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5WZT8M"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script nonce=150668639141000>$(window).load(function() {(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5WZT8M');});</script>
+<!-- End Google Tag Manager -->
+                
+                    <script nonce=150668639141000>
+$(window).load(function() {(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    // Initializing with tracking id
+    
+        ga('create', 'UA-53591212-1', 'auto');
+    
+
+    /* ---- Load the enhanced ecommerce plugin  ---- */
+    ga('require', 'ec');
+    ga('set', 'currencyCode', 'INR');
+
+    if(Swiggy.options.is_ga_events_enabled == '1'){
+        if(Swiggy.tidData){
+            ga('set', 'dimension1', Swiggy.tidData.tid);
+            ga('set', 'dimension2', Swiggy.tidData.sid);
+            ga('set', 'dimension3', Swiggy.tidData.deviceId);
+        }
+        if(Swiggy.pageType == "checkout" && typeof(App) && App.abExperiments && App.abExperiments['cross selling'] && App.abExperiments['cross selling'].params)
+            ga('set', 'dimension4', App.abExperiments['cross selling'].params.show);
+
+        if('isSLaRange' in App)
+            ga('set', 'dimension5', (typeof(App) != "undefined" && App.isSLaRange) ? 'slaRange' : 'noSlaRange');
+
+        if(Swiggy.pageType == "restaurants-new" && typeof(App) && App.abExperiments && App.abExperiments['collections'] && App.abExperiments['collections'].params)
+            ga('set', 'dimension6', App.abExperiments['collections'].params.show == 'true' ? 'true' : 'false');
+        
+        if(Swiggy.pageType == "menu" && typeof(App) && App.abExperiments && App.abExperiments['bestseller'] && App.abExperiments['bestseller'].params)
+            ga('set', 'dimension8', App.abExperiments['bestseller'].params.show == 'true' ? 'true' : 'false');
+
+       
+
+        /* ----- Checkout funnel GA events ---- */
+        
+            var stepEnum = {
+                'home': 1,
+                'restaurants-new': 2,
+                'menu': 3
+            };
+            var stepData = { step: stepEnum["home"] };
+            
+                
+            
+            if(stepEnum["home"]){
+                ga('ec:setAction', 'checkout', stepData);
+            }
+        
+        ga('send', 'pageview');
+    }
+});
+</script>
+                
+                
+                    
+                        <!-- Facebook Pixel Code -->
+<script nonce=150668639141000>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1103929212960245');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1103929212960245&ev=PageView&noscript=1"
+/></noscript>
+<!-- DO NOT MODIFY -->
+<!-- End Facebook Pixel Code -->
+                    
+                    
+                    
+                        <script type="text/javascript" nonce=150668639141000>
+    $(window).load(function() {(function() {
+        var a = document.createElement('script');a.type = 'text/javascript'; a.async = true;
+        a.src=('https:'==document.location.protocol?'https://':'http://cdn.')+'chuknu.sokrati.com/15946/tracker.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(a, s);
+    })();
+	});
+</script>
+                    
+                    
+                
+            
+        
+
+        <script nonce=150668639141000>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                // Registration was successful
+                // console.log('ServiceWorker registration successful with scope: ', reg.scope); // eslint-disable-line
+            }).catch(function(e) {
+                console.error('Error during service worker registration:', e);
+            });
+        });
+    }
+</script>
+    </body>
+</html>
